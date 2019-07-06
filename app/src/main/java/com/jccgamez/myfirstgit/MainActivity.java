@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         EditText txtPassword = findViewById(R.id.txtPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnLista = findViewById(R.id.btnLista);
+        Button btnSensor = findViewById(R.id.btnSensor);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent abrirLista = new Intent(getBaseContext(),ListActivity.class);
                 startActivity(abrirLista);
+            }
+        });
+
+        btnSensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent abrirSensor = new Intent(getBaseContext(),SensorActivity.class);
+                startActivity(abrirSensor);
             }
         });
     }

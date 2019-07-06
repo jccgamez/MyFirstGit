@@ -54,4 +54,13 @@
         tools:layout_editor_absoluteX="178dp"
         tools:layout_editor_absoluteY="540dp" />
 
+    <Button
+        android:id="@+id/btnSensor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="78dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="178dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
