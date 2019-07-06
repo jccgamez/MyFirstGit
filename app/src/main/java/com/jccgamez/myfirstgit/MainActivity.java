@@ -21,11 +21,20 @@ public class MainActivity extends AppCompatActivity {
         EditText txtUsuario = findViewById(R.id.txtUsuario);
         EditText txtPassword = findViewById(R.id.txtPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnLista = findViewById(R.id.btnLista);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getBaseContext(),"hola", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent abrirLista = new Intent(getBaseContext(),ListActivity.class);
+                startActivity(abrirLista);
             }
         });
     }
