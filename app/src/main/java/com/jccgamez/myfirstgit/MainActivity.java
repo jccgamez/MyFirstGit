@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 postData.put("usuario", "fauno");
                 postData.put("anotherParam", "noimporta");
                 HttpPostAsyncTask task = new HttpPostAsyncTask(postData);
-                task.execute("https://www.locreas.com/ws/login.php");
+                task.execute("http://www.locreas.com/ws/login.php");
             }
         });
 
