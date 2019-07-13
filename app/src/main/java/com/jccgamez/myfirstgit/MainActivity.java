@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Comentario solo para cambiar el archivo 
         //Hola
+        //Adios
 
         EditText txtUsuario = findViewById(R.id.txtUsuario);
         EditText txtPassword = findViewById(R.id.txtPassword);
