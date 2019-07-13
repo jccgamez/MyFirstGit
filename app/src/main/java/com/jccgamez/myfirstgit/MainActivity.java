@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // This is getting the url from the string we passed in
                 URL url = new URL(params[0]);
-
+                Log.d("D4",params[0]);
                 // Create the urlConnection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
                     String response = convertInputStreamToString(inputStream);
-
+                    Log.d("D4",response);
                     // From here you can convert the string to JSON with whatever JSON parser you like to use
                     // After converting the string to JSON, I call my custom callback. You can follow this process too, or you can implement the onPostExecute(Result) method
                 } else {
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                Log.d("MSLOG", e.getLocalizedMessage());
+                Log.d("D4", e.getLocalizedMessage());
             }
             return null;
         }
