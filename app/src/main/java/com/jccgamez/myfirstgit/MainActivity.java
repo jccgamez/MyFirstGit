@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Comentario solo para cambiar el archivo
+        // Comentario solo para cambiar el archivo 
         //Hola
 
         EditText txtUsuario = findViewById(R.id.txtUsuario);
