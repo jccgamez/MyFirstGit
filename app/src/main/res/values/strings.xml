@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyFirstGit</string>
+    <string name="main_username">Usuario</string>
+    <string name="main_password">Contraseña</string>
+    <string name="main_login">Iniciar Sesión</string>
+    <string name="main_list">Monedas</string>
+    <string name="main_accelerometer">Acelerómetro</string>
 </resources>

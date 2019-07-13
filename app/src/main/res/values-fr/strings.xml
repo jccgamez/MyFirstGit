@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyFirstGit</string>
+    <string name="main_accelerometer">dgdsg</string>
+    <string name="main_list">sdfgsdfg</string>
+    <string name="main_login">sdfgsdfg</string>
+    <string name="main_password">sdfgsdfg</string>
+    <string name="main_username">sdfgsdfgdsfg</string>
+</resources>
