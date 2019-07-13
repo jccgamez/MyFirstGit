@@ -14,13 +14,19 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,15 +48,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getBaseContext(),"hola", Toast.LENGTH_LONG).show();
-                try {
-                    //new HTTPAsyncTask().HttpPost("http://locreas.com/ws/login.php");
-                    PeticionAsincrona  peticion = new PeticionAsincrona();
-                    peticion.HttpPost("http://locreas.com/ws/login.php");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Map<String, String> postData = new HashMap<>();
+                postData.put("usuario", "fauno");
+                postData.put("anotherParam", "noimporta");
+                HttpPostAsyncTask task = new HttpPostAsyncTask(postData);
+                task.execute("https://www.locreas.com/ws/login.php");
             }
         });
 
@@ -71,56 +73,75 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private class PeticionAsincrona extends AsyncTask<String, Void, String> {
-        private String HttpPost(String myUrl) throws IOException, JSONException {
-            String result = "";
-            URL url = new URL(myUrl);
-            // HttpURLConnection es la clase con la que hacemos un request a un webservice
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-
-            // Creamos objeto json y le agregamos los valores de lass cajas de texto
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("usuario", "fauno");
-            jsonObject.accumulate("password", "fauno*");
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-            writer.write(jsonObject.toString());
-            System.out.println("MS " + jsonObject.toString());
-            Log.i(MainActivity.class.toString(), jsonObject.toString());
-            writer.flush();
-            writer.close();
-            os.close();
-
-            conn.connect();
-
-            // 5. return response message
-            return conn.getResponseMessage()+"";
-
-        }
-
-
-
-        @Override
-        protected String doInBackground(String... urls) {
-            // params comes from the execute() call: params[0] is the url.
-            try {
-                try {
-                    return HttpPost(urls[0]);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return "Error!";
-                }
-            } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
+    public class HttpPostAsyncTask extends AsyncTask<String, Void, Void> {
+        // This is the JSON body of the post
+        JSONObject postData;
+        // This is a constructor that allows you to pass in the JSON body
+        public HttpPostAsyncTask(Map<String, String> postData) {
+            if (postData != null) {
+                this.postData = new JSONObject(postData);
             }
         }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
 
+        private String convertInputStreamToString(InputStream inputStream) {
+            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            try {
+                while((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb.toString();
+        }
+        // This is a function that we are overriding from AsyncTask. It takes Strings as parameters because that is what we defined for the parameters of our async task
+        @Override
+        protected Void doInBackground(String... params) {
+
+            try {
+                // This is getting the url from the string we passed in
+                URL url = new URL(params[0]);
+
+                // Create the urlConnection
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+
+                urlConnection.setRequestMethod("POST");
+
+
+                // Send the post body
+                if (this.postData != null) {
+                    OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
+                    writer.write(postData.toString());
+                    writer.flush();
+                }
+
+                int statusCode = urlConnection.getResponseCode();
+
+                if (statusCode ==  200) {
+
+                    InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+                    String response = convertInputStreamToString(inputStream);
+
+                    // From here you can convert the string to JSON with whatever JSON parser you like to use
+                    // After converting the string to JSON, I call my custom callback. You can follow this process too, or you can implement the onPostExecute(Result) method
+                } else {
+                    // Status code is not 200
+                    // Do something to handle the error
+                }
+
+            } catch (Exception e) {
+                Log.d("MSLOG", e.getLocalizedMessage());
+            }
+            return null;
         }
     }
 }
