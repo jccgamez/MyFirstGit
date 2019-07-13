@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         //Hola
         //Adios
 
-        EditText txtUsuario = findViewById(R.id.txtUsuario);
-        EditText txtPassword = findViewById(R.id.txtPassword);
+        final EditText txtUsuario = findViewById(R.id.txtUsuario);
+        final EditText txtPassword = findViewById(R.id.txtPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnLista = findViewById(R.id.btnLista);
         Button btnSensor = findViewById(R.id.btnSensor);
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getBaseContext(),"hola", Toast.LENGTH_LONG).show();
                 Map<String, String> postData = new HashMap<>();
-                postData.put("usuario", "fauno");
-                postData.put("anotherParam", "noimporta");
+                postData.put("usuario", txtUsuario.getText().toString());
+                postData.put("password", txtPassword.getText().toString());
                 HttpPostAsyncTask task = new HttpPostAsyncTask(postData);
                 task.execute("http://www.locreas.com/ws/login.php");
             }
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 // This is getting the url from the string we passed in
                 URL url = new URL(params[0]);
                 Log.d("D4",params[0]);
+
                 // Create the urlConnection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
