@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
     public class HttpPostAsyncTask extends AsyncTask<String, Void, Void> {
         // This is the JSON body of the post
-        JSONObject postData;
+        Map<String,String> postData;
         // This is a constructor that allows you to pass in the JSON body
         public HttpPostAsyncTask(Map<String, String> postData) {
             if (postData != null) {
-                this.postData = new JSONObject(postData);
+                this.postData = postData;
             }
         }
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 urlConnection.setDoInput(true);
                 urlConnection.setDoOutput(true);
 
-                urlConnection.setRequestProperty("Content-Type", "application/json");
+                //urlConnection.setRequestProperty("Content-Type", "application/json");
 
                 urlConnection.setRequestMethod("POST");
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 // Send the post body
                 if (this.postData != null) {
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
-                    writer.write(postData.toString());
+                    writer.write("variablex=otrovalorfijo&usuario=" + postData.get("usuario") + "&password=" + postData.get("password"));
                     writer.flush();
                     Log.d("D4", postData.toString());
                 }
