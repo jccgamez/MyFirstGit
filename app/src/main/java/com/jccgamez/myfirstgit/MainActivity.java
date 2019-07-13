@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(postData.toString());
                     writer.flush();
+                    Log.d("D4", postData.toString());
                 }
 
                 int statusCode = urlConnection.getResponseCode();
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
                     String response = convertInputStreamToString(inputStream);
                     Log.d("D4",response);
+
                     // From here you can convert the string to JSON with whatever JSON parser you like to use
                     // After converting the string to JSON, I call my custom callback. You can follow this process too, or you can implement the onPostExecute(Result) method
                 } else {
